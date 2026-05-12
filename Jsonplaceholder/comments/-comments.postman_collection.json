@@ -1,0 +1,317 @@
+{
+  "info": {
+    "_postman_id": "1422956f-27b1-4d54-a753-92e169d5d7e0",
+    "name": "/comments",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "48127666"
+  },
+  "item": [
+    {
+      "name": "GET Request",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.expect(pm.response.code).to.eql(200)",
+              "})",
+              "",
+              "pm.test(\"Response time is less than 200\",()=>{",
+              "    pm.expect(pm.response.responseTime).to.be.below(200)",
+              "})"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{baseURL}}/comments/",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "comments",
+            ""
+          ],
+          "query": [
+            {
+              "key": "postId",
+              "value": "2",
+              "type": "text",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Post Request",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201\", function () {",
+              "    pm.expect(pm.response.code).to.eql(201);",
+              "})",
+              "",
+              "pm.test(\"Response time is less than 500ms\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(500);",
+              "    })",
+              "",
+              "pm.test(\"Response body contains the correct data\", function () {",
+              "    pm.expect(pm.response.json()[0].postId).to.eql(1);",
+              "    pm.expect(pm.response.json()[0].id).to.eql(78);",
+              "    pm.expect(pm.response.json()[0].name).to.eql(\"Post\");",
+              "    pm.expect(pm.response.json()[0].email).to.eql(\"Post@sydney.com\");",
+              "    pm.expect(pm.response.json()[0].body).to.eql(\"est natu\");",
+              "    pm.expect(pm.response.json()[1].postId).to.eql(3);",
+              "    pm.expect(pm.response.json()[1].id).to.eql(79);",
+              "    pm.expect(pm.response.json()[1].name).to.eql(\"Post2\");",
+              "    pm.expect(pm.response.json()[1].email).to.eql(\"Pos2t@sydney.com\");",
+              "    pm.expect(pm.response.json()[1].body).to.eql(\"est2 natu\");",
+              "    pm.expect(pm.response.json().id).to.eql(501);",
+              "})"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "[\n    {\n        \"postId\": 1,\n        \"id\": 78,\n        \"name\": \"Post\",\n        \"email\": \"Post@sydney.com\",\n        \"body\": \"est natu\"\n    },\n    {\n        \"postId\": 3,\n        \"id\": 79,\n        \"name\": \"Post2\",\n        \"email\": \"Pos2t@sydney.com\",\n        \"body\": \"est2 natu\"\n    }\n]",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseURL}}/comments/",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "comments",
+            ""
+          ],
+          "query": [
+            {
+              "key": "postId",
+              "value": "2",
+              "type": "text",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Request",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "    });",
+              "",
+              "    pm.test(\"Response body is empty\", function () {",
+              "        pm.expect(pm.response.text()).to.eql(\"{}\");",
+              "    })",
+              "",
+              "    pm.test(\"Response time is less tan 500\",()=>{",
+              "        pm.expect(pm.response.responseTime).to.be.below(500)",
+              "    })"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseURL}}/comments/3",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "comments",
+            "3"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "New Request",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Response status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "    });",
+              "",
+              "pm.test(\"Response body contains the correct data\", function () {",
+              "    pm.expect(pm.response.json().id).to.eql(2);",
+              "   // pm.expect(pm.response.json().name).to.eql(\"patch\");",
+              "    pm.expect(pm.response.json().email).to.eql(\"Jayne_Kuhic@sydney.com\");",
+              "    pm.expect(pm.response.json().body).to.include(\"est natus enim nihil est dolore omnis volupta\"); ",
+              "    });",
+              "",
+              "pm.test(\"Response body contains the correct postId\", function () {",
+              "    pm.expect(pm.response.json().postId).to.eql(1);",
+              "})",
+              "",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": " [{\n    \"postId\": 1,\n    \"id\": 2,\n    \"name\": \"patch\",\n    \"email\": \"Jayne_Kuhic@sydney.com\",\n    \"body\": \"est natus enim nihil est dolore omnis volupta\"\n  }]",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseURL}}/comments/2",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "comments",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "New Request",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "})",
+              "",
+              "pm.test(\"Response time is less than 5000ms\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(500);",
+              "    })",
+              "",
+              "pm.test(\"Response body contains the correct postId\", function () {",
+              "    pm.expect(pm.response.json().postId).to.eql(1);",
+              "    })",
+              "",
+              "    "
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": " {\n    \"postId\": 1,\n    \"id\": 1,\n    \"name\": \"put\",\n    \"email\": \"put@gardner.biz\",\n    \"body\": \"laudantiumte accusantium\"\n  }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseURL}}/comments/1",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "comments",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseURL",
+      "value": ""
+    }
+  ]
+}
