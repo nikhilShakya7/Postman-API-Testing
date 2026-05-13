@@ -1,0 +1,320 @@
+{
+  "info": {
+    "_postman_id": "efb99e61-a810-4861-90c3-8e2797fb0bbe",
+    "name": "New Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "48127666"
+  },
+  "item": [
+    {
+      "name": "New Request",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "    });",
+              "",
+              "pm.test(\"Response time is less than 300ms\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(300);",
+              "    });",
+              "",
+              "",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "apikey",
+          "apikey": [
+            {
+              "key": "value",
+              "value": "{{apiKey}}",
+              "type": "string"
+            },
+            {
+              "key": "key",
+              "value": "x-api-key",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseURL}}/collections/products/objects",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "collections",
+            "products",
+            "objects"
+          ],
+          "query": [
+            {
+              "key": "price",
+              "value": "999",
+              "type": "text",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "New Request",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200 \", function () {",
+              "    pm.response.to.have.status(200);",
+              "    });",
+              "",
+              "pm.test(\"Response time is less than 500ms\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(500);",
+              "    });",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "apikey",
+          "apikey": [
+            {
+              "key": "value",
+              "value": "{{apiKey}}",
+              "type": "string"
+            },
+            {
+              "key": "key",
+              "value": "x-api-key",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"id\": \"9\",\n    \"name\": \"Beats Studio3 Wireless\",\n    \"data\": {\n      \"Color\": \"Red\",\n      \"Description\": \"High-performance wireless noise cancelling headphones\"\n    }\n  }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseURL}}collections/products/objects",
+          "host": [
+            "{{baseURL}}collections"
+          ],
+          "path": [
+            "products",
+            "objects"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "New Request",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Check status code is 200',()=>{",
+              "    pm.expect(pm.response.code).to.eql(200)",
+              "})",
+              "",
+              "pm.test('Check response body contains correct data',()=>{",
+              "    pm.expect(pm.response.json().name).to.eql('Nokia')",
+              "    pm.expect(pm.response.json().data.color).to.eql('Black')",
+              "    })",
+              "",
+              "pm.test('Response time is less than 300', ()=>{",
+              "    pm.expect(pm.response.responseTime).to.be.below(300)",
+              "    ",
+              "})",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\n    \"name\": \"Nokia\",\n    \"data\": {\n        \"color\": \"Black\",\n        \"price\": \"8999\"\n    }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseURL}}/collections/products/objects/ff8081819d82fab6019e208208d83138",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "collections",
+            "products",
+            "objects",
+            "ff8081819d82fab6019e208208d83138"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "New Request",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "    });",
+              "",
+              "pm.test(\"Response time is less than 200ms\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(200);",
+              "    });",
+              "",
+              "pm.test(\"Response body contains correct product name\", function () {",
+              "    pm.expect(pm.response.json().name).to.eql(\"Realme\");",
+              "        });",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": " {\n        \"name\": \"Realme\",\n        \"data\": {\n            \"color\": \"Red\",\n            \"price\": 32222\n        }\n }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseURL}}/collections/products/objects/ff8081819d82fab6019e208a3b34315c",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "collections",
+            "products",
+            "objects",
+            "ff8081819d82fab6019e208a3b34315c"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "New Request",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "    });",
+              "",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseURL}}/collections/products/objects/ff8081819d82fab6019e20900efd3165",
+          "host": [
+            "{{baseURL}}"
+          ],
+          "path": [
+            "collections",
+            "products",
+            "objects",
+            "ff8081819d82fab6019e20900efd3165"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "key",
+        "value": "x-api-key",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ]
+}
