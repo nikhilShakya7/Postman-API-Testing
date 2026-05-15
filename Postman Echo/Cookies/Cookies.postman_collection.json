@@ -1,0 +1,393 @@
+{
+  "info": {
+    "_postman_id": "522405ce-f23e-4fe4-bf32-4c2ab15a9eae",
+    "name": "Cookies",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "48127666"
+  },
+  "item": [
+    {
+      "name": "Set cookies",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Cookies are returned in the response body\", function () {\r",
+              "    const jsonData = pm.response.json();\r",
+              "    pm.expect(jsonData.cookies).to.have.property('foo1', 'bar1');\r",
+              "    pm.expect(jsonData.cookies).to.have.property('foo3', 'bar3');\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BaseUrl}}cookies/set?foo1=bar1&foo2=bar2\n&foo3=bar3&foo4=bar4",
+          "host": [
+            "{{BaseUrl}}cookies"
+          ],
+          "path": [
+            "set"
+          ],
+          "query": [
+            {
+              "key": "foo1",
+              "value": "bar1"
+            },
+            {
+              "key": "foo2",
+              "value": "bar2\n"
+            },
+            {
+              "key": "foo3",
+              "value": "bar3"
+            },
+            {
+              "key": "foo4",
+              "value": "bar4"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get cookies",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Verify cookies are retrieved\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "    const jsonData = pm.response.json();\r",
+              "    pm.expect(jsonData.cookies).to.not.be.empty;\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BaseUrl}}cookies",
+          "host": [
+            "{{BaseUrl}}cookies"
+          ]
+        },
+        "description": "## Get Cookies\n\nRetrieves all cookies currently associated with the request session.\n\nThis endpoint returns a JSON object containing all cookies sent with the request. It is useful for verifying that cookies have been correctly set in a prior request (e.g., via the `/cookies/set` endpoint).\n\n### Request\n\n- **Method:** GET\n- **URL:** `{{BaseUrl}}cookies`\n- **Auth:** None required\n- **Headers:** None required\n\n### Response\n\nReturns a `200 OK` with a JSON body containing a `cookies` object, where each key-value pair represents a cookie name and its value.\n\n**Example Response:**\n```json\n{\n  \"cookies\": {\n    \"foo1\": \"bar1\",\n    \"foo2\": \"bar2\"\n  }\n}\n```\n\n### Notes\n\n- Use the `Set cookies` request first to populate cookies before calling this endpoint.\n- The `BaseUrl` variable should be set to `https://postman-echo.com/`."
+      },
+      "response": []
+    },
+    {
+      "name": "Delete cookies",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Cookies removed successfully\", function () {\r",
+              "    const jsonData = pm.response.json();\r",
+              "    pm.expect(jsonData.cookies).to.not.have.property('foo1');\r",
+              "    pm.expect(jsonData.cookies).to.not.have.property('foo2');\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BaseUrl}}cookies/delete?foo1&foo2",
+          "host": [
+            "{{BaseUrl}}cookies"
+          ],
+          "path": [
+            "delete"
+          ],
+          "query": [
+            {
+              "key": "foo1",
+              "value": null
+            },
+            {
+              "key": "foo2",
+              "value": null
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Response status",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// For Response Status 200\r",
+              "pm.test(\"Status is 200 OK\", () => pm.response.to.have.status(200));\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BaseUrl}}status/200",
+          "host": [
+            "{{BaseUrl}}status"
+          ],
+          "path": [
+            "200"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Stream Response",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// For Response Status 200\r",
+              "pm.test(\"Status is 200 OK\", () => pm.response.to.have.status(200));\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BaseUrl}}stream/5",
+          "host": [
+            "{{BaseUrl}}stream"
+          ],
+          "path": [
+            "5"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Encoded Response",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BaseUrl}}encoding/utf8",
+          "host": [
+            "{{BaseUrl}}encoding"
+          ],
+          "path": [
+            "utf8"
+          ]
+        },
+        "description": "Fetches a UTF-8 encoding demo page from the Postman Echo service. The response is an HTML page titled \"Unicode Demo\" that displays a sample plain-text file showcasing a wide variety of Unicode characters and scripts (e.g., Latin, Greek, Cyrillic, Arabic, CJK, and more). This endpoint is useful for verifying that your client correctly handles UTF-8 encoded responses."
+      },
+      "response": []
+    },
+    {
+      "name": "GZip Compressed Response",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// For Response Status 200\r",
+              "pm.test(\"Status is 200 OK\", () => pm.response.to.have.status(200));\r",
+              "\r",
+              "// For GZip/Deflate\r",
+              "pm.test(\"Content-Encoding is present\", function () {\r",
+              "    pm.expect(pm.response.headers.get(\"Content-Encoding\")).to.be.oneOf([\"gzip\", \"deflate\"]);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BaseUrl}}gzip",
+          "host": [
+            "{{BaseUrl}}gzip"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Deflate Compressed Response",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// For Response Status 200\r",
+              "pm.test(\"Status is 200 OK\", () => pm.response.to.have.status(200));\r",
+              "\r",
+              "// For GZip/Deflate\r",
+              "pm.test(\"Content-Encoding is present\", function () {\r",
+              "    pm.expect(pm.response.headers.get(\"Content-Encoding\")).to.be.oneOf([\"gzip\", \"deflate\"]);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BaseUrl}}deflate",
+          "host": [
+            "{{BaseUrl}}deflate"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "IP Address",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BaseUrl}}ip",
+          "host": [
+            "{{BaseUrl}}ip"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "UTC Time",
+      "request": {
+        "auth": {
+          "type": "jwt",
+          "jwt": [
+            {
+              "key": "algorithm",
+              "value": "HS256",
+              "type": "string"
+            },
+            {
+              "key": "isSecretBase64Encoded",
+              "value": false,
+              "type": "boolean"
+            },
+            {
+              "key": "payload",
+              "value": "{}",
+              "type": "string"
+            },
+            {
+              "key": "addTokenTo",
+              "value": "header",
+              "type": "string"
+            },
+            {
+              "key": "headerPrefix",
+              "value": "Bearer",
+              "type": "string"
+            },
+            {
+              "key": "queryParamKey",
+              "value": "token",
+              "type": "string"
+            },
+            {
+              "key": "header",
+              "value": "{}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BaseUrl}}time/now",
+          "host": [
+            "{{BaseUrl}}time"
+          ],
+          "path": [
+            "now"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": ""
+    }
+  ]
+}

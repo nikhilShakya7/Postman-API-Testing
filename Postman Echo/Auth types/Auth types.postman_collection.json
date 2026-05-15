@@ -1,0 +1,490 @@
+{
+  "info": {
+    "_postman_id": "8e8edc0c-a1bd-44f0-982c-dd88f8e04834",
+    "name": "Auth types",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "48127666"
+  },
+  "item": [
+    {
+      "name": "Basic Auth",
+      "item": [
+        {
+          "name": "BasicAuth",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Check if the response status is 200 OK\r",
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "// Verify that the response is JSON\r",
+                  "pm.test(\"Response is JSON\", function () {\r",
+                  "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "\r",
+                  "// Check if the server confirmed authentication\r",
+                  "pm.test(\"Authenticated successfully\", function () {\r",
+                  "    const jsonData = pm.response.json();\r",
+                  "    pm.expect(jsonData.authenticated).to.be.true;\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{basicAuth}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "postman",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}basic-auth",
+              "host": [
+                "{{BaseUrl}}basic-auth"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "auth": {
+        "type": "basic",
+        "basic": [
+          {
+            "key": "password",
+            "value": "{{basicAuth}}",
+            "type": "string"
+          },
+          {
+            "key": "username",
+            "value": "postman",
+            "type": "string"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Digest Auth",
+      "item": [
+        {
+          "name": "DigestAuth",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Digest Auth successful\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "// Validate response time to ensure the handshake was efficient",
+                  "pm.test(\"Response time is less than 800ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(800);",
+                  "});",
+                  "",
+                  "// Ensure the correct algorithm was used (referenced in your JSON as MD5)",
+                  "pm.test(\"Verify MD5 Algorithm used in header\", function () {",
+                  "    pm.expect(pm.request.auth.digest.get(\"algorithm\")).to.eql(\"MD5\");",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "digest",
+              "digest": [
+                {
+                  "key": "username",
+                  "value": "postman",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{digestAuth}}",
+                  "type": "string"
+                },
+                {
+                  "key": "algorithm",
+                  "value": "MD5",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}digest-auth",
+              "host": [
+                "{{BaseUrl}}digest-auth"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "auth": {
+        "type": "digest",
+        "digest": [
+          {
+            "key": "username",
+            "value": "postman",
+            "type": "string"
+          },
+          {
+            "key": "password",
+            "value": "{{digestAuth}}",
+            "type": "string"
+          },
+          {
+            "key": "algorithm",
+            "value": "MD5",
+            "type": "string"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Hawk Auth",
+      "item": [
+        {
+          "name": "HawkAuth",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Hawk Auth request successful\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "// Verify the Authorization header was generated\r",
+                  "pm.test(\"Authorization header is present\", function () {\r",
+                  "    pm.expect(pm.request.headers.has(\"Authorization\")).to.be.true;\r",
+                  "    pm.expect(pm.request.headers.get(\"Authorization\")).to.include(\"Hawk\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "hawk",
+              "hawk": [
+                {
+                  "key": "authKey",
+                  "value": "{{authKey}}",
+                  "type": "string"
+                },
+                {
+                  "key": "authId",
+                  "value": "{{authId}}",
+                  "type": "string"
+                },
+                {
+                  "key": "algorithm",
+                  "value": "sha256",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}auth/hawk",
+              "host": [
+                "{{BaseUrl}}auth"
+              ],
+              "path": [
+                "hawk"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "auth": {
+        "type": "hawk",
+        "hawk": [
+          {
+            "key": "authKey",
+            "value": "{{authKey}}",
+            "type": "string"
+          },
+          {
+            "key": "authId",
+            "value": "{{authId}}",
+            "type": "string"
+          },
+          {
+            "key": "algorithm",
+            "value": "sha256",
+            "type": "string"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "OAuth1.0",
+      "item": [
+        {
+          "name": "New Request",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"OAuth 1.0 status check\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "// Verify that variables were substituted correctly\r",
+                  "pm.test(\"Consumer Key is not empty\", function () {\r",
+                  "    const consumerKey = pm.collectionVariables.get(\"consumerKey\");\r",
+                  "    pm.expect(consumerKey).to.not.be.undefined;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Signature method is HMAC-SHA1\", function () {\r",
+                  "    const authData = pm.request.auth.oauth1;\r",
+                  "    const signature = authData.find(item => item.key === \"signatureMethod\");\r",
+                  "    pm.expect(signature.value).to.equal(\"HMAC-SHA1\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BaseUrl}}oauth1",
+              "host": [
+                "{{BaseUrl}}oauth1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "auth": {
+        "type": "oauth1",
+        "oauth1": [
+          {
+            "key": "consumerSecret",
+            "value": "{{consumerSecret}}",
+            "type": "string"
+          },
+          {
+            "key": "consumerKey",
+            "value": "{{consumerKey}}",
+            "type": "string"
+          },
+          {
+            "key": "signatureMethod",
+            "value": "HMAC-SHA1",
+            "type": "string"
+          },
+          {
+            "key": "version",
+            "value": "1.0",
+            "type": "string"
+          },
+          {
+            "key": "addParamsToHeader",
+            "value": false,
+            "type": "boolean"
+          },
+          {
+            "key": "addEmptyParamsToSign",
+            "value": false,
+            "type": "boolean"
+          }
+        ]
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          "// Validate that the BaseUrl is set\r",
+          "pm.test(\"Environment Check: BaseUrl is defined\", function () {\r",
+          "    pm.expect(pm.collectionVariables.get(\"BaseUrl\")).to.not.be.empty;\r",
+          "});\r",
+          "\r",
+          "// Automatically log the request method and URL for debugging\r",
+          "console.log(`Running ${pm.info.requestName} on ${pm.request.url}`);"
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "BaseUrl",
+      "value": ""
+    },
+    {
+      "key": "basicAuth",
+      "value": ""
+    },
+    {
+      "key": "digestAuth",
+      "value": ""
+    },
+    {
+      "key": "authId",
+      "value": ""
+    },
+    {
+      "key": "authKey",
+      "value": ""
+    },
+    {
+      "key": "consumerKey",
+      "value": ""
+    },
+    {
+      "key": "consumerSecret",
+      "value": ""
+    }
+  ]
+}
