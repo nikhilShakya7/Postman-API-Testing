@@ -1,0 +1,114 @@
+{
+  "info": {
+    "_postman_id": "1e0e4475-1ecf-432c-a6d0-6b5d93bd42d1",
+    "name": "New Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "48127666"
+  },
+  "item": [
+    {
+      "name": "Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "    });\r",
+              "\r",
+              "let jsonData=pm.response.json()\r",
+              "pm.environment.set(\"accessToken\",jsonData.accessToken)"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"username\": \"emilys\",\r\n    \"password\": \"emilyspass\",\r\n    \"expiresInMins\": 30\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}auth/login",
+          "host": [
+            "{{baseUrl}}auth"
+          ],
+          "path": [
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get user",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "    });\r",
+              "\r",
+              "pm.test(\"Response time is less than 300ms\", function () {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(300);\r",
+              "})\r",
+              "\r",
+              "pm.test(\"Correct user is logged in\",()=>{\r",
+              "    pm.expect(pm.response.json().email).to.eql(\"emily.johnson@x.dummyjson.com\")\r",
+              "\r",
+              "})\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}auth/me",
+          "host": [
+            "{{baseUrl}}auth"
+          ],
+          "path": [
+            "me"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get products",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/products/",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "products",
+            ""
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
