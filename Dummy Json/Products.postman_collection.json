@@ -1,0 +1,293 @@
+{
+  "info": {
+    "_postman_id": "1e0e4475-1ecf-432c-a6d0-6b5d93bd42d1",
+    "name": "Products",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "48127666"
+  },
+  "item": [
+    {
+      "name": "Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "    });\r",
+              "\r",
+              "let jsonData=pm.response.json()\r",
+              "pm.environment.set(\"accessToken\",jsonData.accessToken)\r",
+              "\r",
+              "\r",
+              "pm.test(\"Content-Type is present\", function () {\r",
+              "    pm.response.to.have.header(\"Content-Type\");\r",
+              "});\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"username\": \"emilys\",\r\n    \"password\": \"emilyspass\",\r\n    \"expiresInMins\": 30\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}auth/login",
+          "host": [
+            "{{baseUrl}}auth"
+          ],
+          "path": [
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get user",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response time is less than 500\", function () {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+              "})\r",
+              "\r",
+              "pm.test(\"Correct user is logged in\", () => {\r",
+              "    pm.expect(pm.response.json().email).to.eql(\"emily.johnson@x.dummyjson.com\")\r",
+              "\r",
+              "})\r",
+              "\r",
+              "\r",
+              "pm.test(\"Content-Type is present\", function () {\r",
+              "    pm.response.to.have.header(\"Content-Type\");\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}auth/me",
+          "host": [
+            "{{baseUrl}}auth"
+          ],
+          "path": [
+            "me"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get products",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "    });",
+              "",
+              "pm.test(\"Response time is less than 200ms\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(200);",
+              "    });",
+              "",
+              "pm.test(\"Total products returned is  more than 2\", function () {",
+              "    pm.expect(pm.response.json().total).to.greaterThan(2);",
+              "    });",
+              "",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/products/",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "products",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Add product",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201\", function () {",
+              "    pm.response.to.have.status(201);",
+              "    });",
+              "",
+              "pm.test(\"Response time is less than 500ms\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(500);",
+              "    });",
+              "",
+              "pm.test(\"Response body contains the correct product title\", function () {",
+              "    pm.expect(pm.response.json().title).to.eql(\"BMW Pencil\");",
+              "    });",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"BMW Pencil\",\n  \"description\": \"Dolce Shine by Dolce & Gabbana is a vibrant and fruity fragrance, featuring notes of mango, jasmine, and blonde woods. It's a joyful and youthful scent.\",\n  \"category\": \"fragrances\",\n  \"price\": 69.99,\n  \"discountPercentage\": 0.62,\n  \"rating\": 3.96,\n  \"stock\": 4,\n  \"tags\": [\"fragrances\", \"perfumes\"],\n  \"brand\": \"Dolce & Gabbana\",\n  \"sku\": \"FRA-DOL-DOL-009\",\n  \"weight\": 6,\n  \"dimensions\": { \"width\": 27.28, \"height\": 29.88, \"depth\": 18.3 },\n  \"warrantyInformation\": \"3 year warranty\",\n  \"shippingInformation\": \"Ships in 1 month\",\n  \"availabilityStatus\": \"Low Stock\",\n  \"reviews\": [\n    { \"rating\": 4, \"comment\": \"Would buy again!\", \"date\": \"2025-04-30T09:41:02.053Z\", \"reviewerName\": \"Mateo Bennett\", \"reviewerEmail\": \"mateo.bennett@x.dummyjson.com\" },\n    { \"rating\": 4, \"comment\": \"Highly recommended!\", \"date\": \"2025-04-30T09:41:02.053Z\", \"reviewerName\": \"Nolan Gonzalez\", \"reviewerEmail\": \"nolan.gonzalez@x.dummyjson.com\" },\n    { \"rating\": 5, \"comment\": \"Very happy with my purchase!\", \"date\": \"2025-04-30T09:41:02.053Z\", \"reviewerName\": \"Aurora Lawson\", \"reviewerEmail\": \"aurora.lawson@x.dummyjson.com\" }\n  ],\n  \"returnPolicy\": \"7 days return policy\",\n  \"minimumOrderQuantity\": 2,\n  \"meta\": {\n    \"createdAt\": \"2025-04-30T09:41:02.053Z\",\n    \"updatedAt\": \"2025-04-30T09:41:02.053Z\",\n    \"barcode\": \"3023868210708\",\n    \"qrCode\": \"https://cdn.dummyjson.com/public/qr-code.png\"\n  },\n  \"images\": [\n    \"https://cdn.dummyjson.com/product-images/fragrances/dolce-shine-eau-de/1.webp\",\n    \"https://cdn.dummyjson.com/product-images/fragrances/dolce-shine-eau-de/2.webp\",\n    \"https://cdn.dummyjson.com/product-images/fragrances/dolce-shine-eau-de/3.webp\"\n  ],\n  \"thumbnail\": \"https://cdn.dummyjson.com/product-images/fragrances/dolce-shine-eau-de/thumbnail.webp\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://dummyjson.com/products/add",
+          "protocol": "https",
+          "host": [
+            "dummyjson",
+            "com"
+          ],
+          "path": [
+            "products",
+            "add"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Add to cart",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201\", function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "let jsonData=pm.response.json();",
+              "pm.test(\"Cart has products\",()=>{",
+              "    pm.expect(jsonData.products.length).to.be.above(0);",
+              "",
+              "})",
+              "",
+              "pm.environment.set(\"cart_id\",jsonData.id)",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"userId\": 1,\n    \"products\": [\n        {\n            \"id\": 144,\n            \"quantity\": 4\n        },\n        {\n            \"id\": 98,\n            \"quantity\": 1\n        }\n    ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}carts/add",
+          "host": [
+            "{{baseUrl}}carts"
+          ],
+          "path": [
+            "add"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get cart details",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}carts/31",
+          "host": [
+            "{{baseUrl}}carts"
+          ],
+          "path": [
+            "31"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
